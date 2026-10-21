@@ -12,4 +12,6 @@ A researcher and designer who investigates the factors that shape human behavior
 ## Files
 
 - `index.html`: the complete site in one self-contained file (images embedded). Open it in a browser, or serve it with GitHub Pages.
+- `resume.pdf`: résumé linked from the site.
+- `prototype/fuelem/`: the interactive Fuel Em prototype, linked from the Fuel Em case study.
 - `src/`: the source sections the page is built from (`shell.html` holds the layout, styles and scripts; each project has its own file).
