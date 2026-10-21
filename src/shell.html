@@ -15,11 +15,11 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{background:var(--page);color:var(--text);font:400 16px/1.55 var(--f);margin:0;transition:background-color .35s ease}
-@media (prefers-reduced-motion: reduce){body,.card .thumb{transition:none}}
+@media (prefers-reduced-motion: reduce){body,.card .thumb,.card,.card .cta-arrow,.card .cta-arrow svg{transition:none}.card:active{scale:none}}
 a{color:inherit}
 :focus-visible{outline:1px solid currentColor;outline-offset:4px}
 h1,h2,h3,p,dl,dd{margin:0}
-.wrap{max-width:1760px;margin:0 auto;padding-left:max(clamp(28px,7vw,150px), env(safe-area-inset-left,0px));padding-right:max(clamp(28px,7vw,150px), env(safe-area-inset-right,0px))}
+.wrap{max-width:1760px;margin:0 auto;padding-left:max(clamp(28px,14vw,340px), env(safe-area-inset-left,0px));padding-right:max(clamp(28px,14vw,340px), env(safe-area-inset-right,0px))}
 
 header.site .wrap{display:flex;justify-content:space-between;align-items:baseline;gap:12px 32px;flex-wrap:wrap;padding-block:36px}
 .name{font-weight:500;text-decoration:none}
@@ -28,7 +28,9 @@ header nav a{text-decoration:none;color:var(--grey)}
 header nav a:hover,header nav a[aria-current="page"]{color:var(--text)}
 
 .intro{padding-block:clamp(48px,7vw,104px) clamp(56px,7vw,104px)}
-.intro p{font-size:clamp(20px,2.2vw,26px);line-height:1.35;max-width:30em;font-weight:400}
+.intro h1{font-size:clamp(30px,4.2vw,54px);font-weight:500;line-height:1.1;letter-spacing:-.015em;max-width:18em;text-wrap:balance}
+.intro p{font-size:clamp(18px,1.9vw,23px);line-height:1.4;max-width:34em;font-weight:400;color:var(--grey);margin-top:20px}
+.intro p.intro-role{font-size:15px;margin-top:22px}
 
 .tabs{display:flex;gap:28px;border-bottom:1px solid var(--hair);margin-bottom:56px}
 .tabs button{font:inherit;font-size:15px;background:none;border:0;padding:0 0 12px;margin-bottom:-1px;color:var(--grey);cursor:pointer;border-bottom:1px solid transparent}
@@ -37,18 +39,27 @@ header nav a:hover,header nav a[aria-current="page"]{color:var(--text)}
 
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:72px 48px;padding-bottom:clamp(80px,9vw,140px)}
 @media (max-width:720px){.grid{grid-template-columns:1fr;gap:44px}}
-.card{text-decoration:none;display:flex;flex-direction:column;gap:16px}
-.card .thumb{transition:opacity .25s ease}
-.card:hover .thumb{opacity:.86}
+.card{text-decoration:none;display:flex;flex-direction:column;background:#fff;border:1px solid var(--hair);border-radius:22px;overflow:hidden;
+  box-shadow:0 1px 2px rgba(20,20,20,.04);transition:translate .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s ease,border-color .3s ease}
+.card:hover{border-color:color-mix(in srgb,var(--text) 22%,transparent);box-shadow:0 18px 40px -18px rgba(20,20,20,.28),0 2px 6px rgba(20,20,20,.05)}
+.card:active{scale:.985}
+.card:focus-visible{outline:2px solid var(--text);outline-offset:4px}
+.card .cap{padding:22px 26px 26px;display:flex;flex-direction:column;flex:1}
+.card .cta{margin-top:auto;padding-top:20px;display:inline-flex;align-items:center;gap:12px;font-size:15px;font-weight:500;color:var(--text);align-self:flex-start}
+.card .cta-arrow{width:36px;height:36px;border-radius:50%;border:1px solid color-mix(in srgb,var(--text) 25%,transparent);display:grid;place-items:center;transition:background-color .3s ease,border-color .3s ease,color .3s ease}
+.card .cta-arrow svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:translate .35s cubic-bezier(.2,.7,.2,1)}
+.card:hover .cta-arrow,.card:focus-visible .cta-arrow{background:var(--text);border-color:var(--text);color:#fff}
 .card h3{font-size:17px;font-weight:500}
 .card p{color:var(--grey);font-size:17px;max-width:34em}
 .card .when{font-size:13px;margin-top:6px}
+.card .meta{font-size:13px;letter-spacing:.02em;color:var(--text);margin:4px 0 6px}
 
 /* Home cards */
 .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;max-width:100%;container-type:inline-size}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .tcover{position:absolute;inset:0;padding:6cqw 7cqw;display:flex;flex-direction:column;justify-content:center;gap:2.2cqw;font-family:'Work Sans','Helvetica Neue',Arial,sans-serif}
 .tcover .te{font-size:max(9px,2cqw);font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.card .tcover .tt{color:inherit}
 .tcover .tt{font-size:6.4cqw;font-weight:700;line-height:1.08;letter-spacing:-.01em;max-width:13em}
 .tcover .ts{font-size:max(10px,2.5cqw);line-height:1.4;max-width:30em;border-left:3px solid currentColor;padding-left:2cqw}
 
@@ -129,7 +140,7 @@ header nav a:hover,header nav a[aria-current="page"]{color:var(--text)}
 .project .quote-big{font-size:33px;font-weight:800;line-height:1.2}
 .project .panel{background:var(--panel);border-radius:16px;padding:24px 28px;display:flex;flex-direction:column;gap:8px}
 .project .chips{display:flex;flex-wrap:wrap;gap:8px}
-.project .chips span{padding:6px 14px;border-radius:8px;background:var(--soft);color:var(--deep);font-weight:600;font-size:15px}
+.project .chips span{padding:6px 16px;border-radius:999px;background:var(--soft);color:var(--deep);font-weight:600;font-size:15px}
 .project .chips.slate span{background:var(--slatebg);color:var(--slate);font-weight:500}
 .project .chips span.mutedchip{background:transparent;border:1px solid var(--line);color:var(--mute);font-weight:500}
 .project .plainchips span{background:#FDF9F2;color:#5E5148}
@@ -235,7 +246,7 @@ header nav a:hover,header nav a[aria-current="page"]{color:var(--text)}
 .project .task{margin:0;container-type:inline-size;width:100%;border-top:3px solid var(--acc);padding-top:4cqw}
 .project .task .trows{display:flex;flex-direction:column;gap:1.6cqw}
 .project .trow{display:flex;flex-wrap:nowrap;gap:1.6cqw;align-items:center}
-.project .tq{flex:none;background:var(--soft);color:var(--deep);font-weight:600;border-radius:1.6cqw;padding:1.7cqw 2.4cqw;font-size:2.9cqw;line-height:1.25;white-space:nowrap}
+.project .tq{flex:none;background:var(--soft);color:var(--deep);font-weight:600;border-radius:99px;padding:1.7cqw 3cqw;font-size:2.9cqw;line-height:1.25;white-space:nowrap}
 .project .trow > .tq:first-child{width:40cqw}
 .project .tc{flex:none;border:1px solid #BFDDB9;color:var(--lab);border-radius:99px;padding:.6cqw 2.1cqw;font-size:2.5cqw;line-height:1.3;white-space:nowrap;background:var(--bg)}
 .project .trow .arr{width:5cqw;height:2.8cqw}
@@ -306,10 +317,13 @@ header nav a:hover,header nav a[aria-current="page"]{color:var(--text)}
   [role=tabpanel]:not([hidden]){animation:viewin .4s cubic-bezier(.2,.7,.2,1) both}
   @keyframes viewin{from{opacity:.001;transform:translateY(10px)}to{opacity:1;transform:none}}
   .card .thumb{overflow:hidden}
-  .card .thumb img,.card .thumb .tcover{transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-  .card:hover .thumb img,.card:hover .thumb .tcover{transform:scale(1.03)}
-  .card h3{transition:color .2s ease}
-  .card:hover h3{color:var(--grey)}
+  .card .thumb img,.card .thumb .tcover{transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+  .card:hover .thumb img,.card:hover .thumb .tcover{transform:scale(1.045)}
+  .card:hover{translate:0 -6px}
+  .card:hover .cta-arrow svg{translate:3px 0}
+  [role=tabpanel]:not([hidden]) > .card{animation:cardin .6s cubic-bezier(.2,.7,.2,1) both}
+  [role=tabpanel]:not([hidden]) > .card:nth-child(2){animation-delay:.09s}
+  @keyframes cardin{from{opacity:.001;transform:translateY(18px)}to{opacity:1;transform:none}}
   .tabs button{transition:color .2s ease,border-color .3s ease}
   .project .flow .arr,.project .compare .arr,.project .cutrow .arr{transition:transform .35s ease}
   .project .flow:hover .arr,.project .compare:hover .arr,.project .cutrow:hover .arr{transform:translateX(4px)}
@@ -318,7 +332,7 @@ header nav a:hover,header nav a[aria-current="page"]{color:var(--text)}
   .pfoot a{transition:transform .3s ease}
   .pfoot a:hover{transform:translateX(6px)}
   @supports (animation-timeline: view()){
-    .project .canvas > *,.project .body > *,.project .grid > *,.project .flow > .box,.project .apps > .tile,.project .fcards > .fcard,.project .system > .box,.project .bets > .bet,.project .phones > figure,.project .coverimg,.grid > .card,.ai > .aitool,.list3 > div{
+    .project .canvas > *,.project .body > *,.project .grid > *,.project .flow > .box,.project .apps > .tile,.project .fcards > .fcard,.project .system > .box,.project .bets > .bet,.project .phones > figure,.project .coverimg,.ai > .aitool,.list3 > div{
       animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
     @keyframes rise{from{transform:translateY(26px)}to{transform:none}}
   }
@@ -386,11 +400,95 @@ footer h2{font-size:22px;font-weight:500;line-height:1.25;max-width:14em}
 .project .s > .wrap.scaled{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
 .project .canvas{width:1080px;margin:0 auto;transform-origin:0 0}
 .project .canvas.cover-grid{display:grid}
+
+/* Rally: "team feeling" illustration, drawn in HTML so it stays sharp */
+.project .teamfeel{margin:0;justify-self:center;width:100%;max-width:440px;aspect-ratio:560/656;background:#F8E1DC;border-radius:26px;position:relative;overflow:hidden;font-family:'Work Sans','Helvetica Neue',Arial,sans-serif;container-type:inline-size}
+.project .teamfeel p{margin:0}
+.project .tf-title{position:absolute;left:5.7cqw;top:6.6cqw;font-size:4.1cqw;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#8B2A3E}
+.project .tf-card{position:absolute;background:#fff;border-radius:4.6cqw;box-shadow:0 1.4cqw 3.6cqw rgba(110,40,30,.14),0 .3cqw .8cqw rgba(110,40,30,.08);display:flex;gap:2.6cqw;align-items:center;padding:3cqw 4cqw}
+.project .tf-1{left:6.6cqw;top:17.5cqw;width:80cqw;rotate:-3deg}
+.project .tf-2{left:27.5cqw;top:40.5cqw;width:62cqw;rotate:2deg;flex-direction:column;align-items:stretch;gap:3cqw;padding:3.4cqw 3.6cqw}
+.project .tf-3{left:11cqw;top:83cqw;width:62cqw;white-space:nowrap;rotate:-3deg;border-radius:9cqw;padding:3cqw 5cqw 3cqw 3.4cqw}
+.project .tf-row{display:flex;gap:2.6cqw;align-items:center}
+.project .tf-ic{flex:none;display:grid;place-items:center;border-radius:2.4cqw;width:7.8cqw;height:7.8cqw}
+.project .tf-ic svg{width:4.4cqw;height:4.4cqw}
+.project .tf-heart{background:#FBE6E3}.project .tf-heart svg{fill:#A8263F}
+.project .tf-clock{border-radius:50%;width:8.6cqw;height:8.6cqw;background:linear-gradient(135deg,#8B2A3E,#C4633A)}.project .tf-clock svg{fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round}
+.project .tf-av{flex:none;width:8.4cqw;height:8.4cqw;border-radius:2.2cqw;background:#5F8796;color:#fff;font-weight:600;font-size:3.6cqw;display:grid;place-items:center}
+.project .tf-h{font-size:3cqw;font-weight:600;color:#2A211C;line-height:1.25}
+.project .tf-h.big{font-size:3.3cqw}
+.project .tf-s{font-size:2.3cqw;color:#6B5E55;line-height:1.35}
+.project .tf-o{font-size:2.5cqw;font-weight:600;color:#C4633A}
+.project .tf-body{font-size:2.5cqw;color:#4A403A;line-height:1.4}
+.project .tf-btn{display:block;text-align:center;background:#BF6A30;color:#fff;font-weight:600;font-size:2.6cqw;border-radius:2cqw;padding:1.6cqw}
+
+/* Rally UI cards rebuilt in HTML for sharpness */
+.project .notif{filter:drop-shadow(0 6px 14px rgba(110,40,30,.14))}
+.project .product{grid-template-columns:auto minmax(300px,1fr)}
+.project .product .phones figure{width:150px}
+.project .product .phones figcaption{font-size:15px}
+.project .ui-card{width:100%;max-width:340px;background:#fff;border-radius:18px;box-shadow:0 6px 18px rgba(110,40,30,.10);padding:16px 18px;display:flex;flex-direction:column;gap:10px;font-family:'Work Sans','Helvetica Neue',Arial,sans-serif}
+.project .ui-row{display:flex;align-items:center;gap:12px}
+.project .ui-ic{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#E9A07A,#C4633A);display:grid;place-items:center;flex:none}
+.project .ui-ic svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linejoin:round}
+.project .ui-lab{font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#A3958A}
+.project .ui-quote{font-size:19px;font-weight:600;line-height:1.3;color:#2A211C}
+.project .ui-goal{font-size:16.5px;font-weight:600;line-height:1.3;color:#2A211C}
+.project .ui-bar{display:block;height:7px;border-radius:9px;background:#F1E6DC;overflow:hidden}
+.project .ui-bar i{display:block;width:50%;height:100%;border-radius:9px;background:linear-gradient(90deg,#8B2A3E,#C4633A)}
+.project .ui-count{font-size:14px;color:#6B5E55}
+/* Phones: reflow project sections into one readable column instead of shrinking them */
+.reflow .project .canvas{width:auto}
+.reflow .project .s{padding-block:64px}
+.reflow .project .s > .wrap.scaled{overflow:visible}
+.reflow .project h1{font-size:34px}
+.reflow .project .t{font-size:30px}
+.reflow .project .t.xl{font-size:34px}
+.reflow .project .lede{font-size:17px}
+.reflow .project .quote-big{font-size:24px}
+.reflow .project .num{font-size:48px}
+.reflow .project .huge{font-size:84px}
+.reflow .project .cover-tag{font-size:21px}
+.reflow .project .coverimg{width:100%}
+.reflow .project .body{margin-top:28px;gap:28px}
+.reflow .project .cover-grid,.reflow .project .split,.reflow .project .split-img,.reflow .project .split-img.rev,
+.reflow .project .g2,.reflow .project .g3,.reflow .project .g4,.reflow .project .g5,.reflow .project .usab-mod,
+.reflow .project .three-uneven,.reflow .project .convos,.reflow .project .product,.reflow .project .testgrid,
+.reflow .project .fcards,.reflow .project .commit,.reflow .project .system,.reflow .project .flow.seq{grid-template-columns:minmax(0,1fr)}
+.reflow .project .system > *{grid-column:auto!important;grid-row:auto!important}
+.reflow .project .system > :nth-child(3){order:-1}
+.reflow .project .commit .arr.side{display:none}
+.reflow .project .flow{flex-direction:column}
+.reflow .project .flow > .arr,.reflow .project .compare .arr,.reflow .project .cutrow .arr,.reflow .project .mod-steps .arr{transform:rotate(90deg);margin:2px auto}
+.reflow .project .compare,.reflow .project .cutrow,.reflow .project .mod-steps{grid-template-columns:minmax(0,1fr);gap:10px}
+.reflow .project .bets .bh{display:none}
+.reflow .project .bet{grid-template-columns:minmax(0,1fr)}
+.reflow .project .beforeafter{grid-template-columns:1fr 32px 1fr}
+.reflow .project .beforeafter .stack{grid-column:1 / -1}
+.reflow .project .tile img{max-width:100%}
+.reflow .project .phones figure,.reflow .project .product .phones figure{width:calc(50% - 9px)}
+.reflow .project .product{grid-template-columns:minmax(0,1fr)}
+.reflow .project .apps{grid-template-columns:minmax(0,1fr);gap:14px}
+.reflow .project .apps .tile{border-radius:16px;padding:18px 20px;gap:8px}
+.reflow .project .apps .tile h3{font-size:19px}
+.reflow .project .apps .tile p{font-size:15px}
+.reflow .project .apps .tile .inset{border-radius:10px;padding:10px 12px}
+.reflow .project .task{padding-top:16px}
+.reflow .project .task .trows{gap:8px}
+.reflow .project .trow{flex-wrap:wrap;gap:6px}
+.reflow .project .tq{font-size:14px;padding:7px 14px;border-radius:999px}
+.reflow .project .trow > .tq:first-child{width:100%}
+.reflow .project .tc{font-size:13px;padding:3px 10px}
+.reflow .project .trow .arr{width:20px;height:12px}
+.reflow .project .task figcaption{font-size:13px;margin-top:12px}
+@media (min-width:700px){.reflow .project .apps{grid-template-columns:repeat(2,minmax(0,1fr))}.reflow .project .g3,.reflow .project .g4,.reflow .project .g5,.reflow .project .fcards,.reflow .project .flow.seq{grid-template-columns:repeat(2,minmax(0,1fr))}.reflow .project .s{padding-block:88px}.reflow .project .t{font-size:38px}}
+
 .project .s[data-fit]{padding-block:56px}
 .project .s[data-fit] .body{gap:14px}
 .project .s[data-fit] .cut{padding:16px 22px;gap:10px}
-@media (max-width:900px){.project .s > .wrap.scaled{padding-left:max(20px, env(safe-area-inset-left,0px));padding-right:max(20px, env(safe-area-inset-right,0px))}}
+@media (max-width:900px){.project .s > .wrap.scaled{padding-left:max(32px, env(safe-area-inset-left,0px));padding-right:max(32px, env(safe-area-inset-right,0px))}}
 [hidden]{display:none!important}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
 
 <header class="site">
@@ -414,7 +512,7 @@ footer h2{font-size:22px;font-weight:500;line-height:1.25;max-width:14em}
     <nav class="contact" aria-label="Contact">
       <a href="mailto:ggioia@falcon.bentley.edu?subject=Let%27s%20Connect">Email</a>
       <a href="https://www.linkedin.com/in/gianna-gioia-bentley/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://claude.ai/artifact/FLRa1KhQmQWEVqD74BtT9c" target="_blank" rel="noopener">Resume</a>
+      <a href="resume.pdf" target="_blank" rel="noopener">Resume</a>
     </nav>
   </div>
 </footer>
@@ -460,10 +558,13 @@ footer h2{font-size:22px;font-weight:500;line-height:1.25;max-width:14em}
     while(w.firstChild) c.appendChild(w.firstChild);
     w.appendChild(c); w.classList.add('scaled');
   });
+  function PHONE(){ return window.innerWidth < 1000; }
   function scaleAll(){
+    document.documentElement.classList.toggle('reflow', PHONE());
     document.querySelectorAll('.project:not([hidden]) .s > .wrap.scaled').forEach(function(w){
       var cs=getComputedStyle(w), avail=w.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
       var c=w.firstElementChild;
+      if(PHONE()){ c.style.zoom=1; c.style.marginLeft='0'; return; }
       var z=Math.min(MAXZ, Math.max(MINZ, avail/1080));
       if(w.parentElement.hasAttribute('data-fit')){
         c.style.zoom=1; var h=c.offsetHeight, room=window.innerHeight-80;
@@ -500,7 +601,7 @@ footer h2{font-size:22px;font-weight:500;line-height:1.25;max-width:14em}
   // views
   var views = Array.prototype.slice.call(document.querySelectorAll('[data-view]'));
   var names = views.map(function(v){ return v.getAttribute('data-view'); });
-  var titles = {work:'Gianna Gioia', about:'About · Gianna Gioia', field:'Field Service Ethnography · Gianna Gioia', usability:'Enterprise Usability Testing · Gianna Gioia', fuelem:'Fuel Em · Gianna Gioia', rally:'Rally · Gianna Gioia'};
+  var titles = {work:'Gianna Gioia', about:'About · Gianna Gioia', field:'Field Service Ethnography · Gianna Gioia', usability:'Small-Business Software Usability Testing · Gianna Gioia', fuelem:'Fuel Em · Gianna Gioia', rally:'Rally · Gianna Gioia'};
   var current = null;
   function show(name, anchor){
     if(current !== name){
