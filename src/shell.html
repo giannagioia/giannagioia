@@ -26,6 +26,18 @@ header.site .wrap{display:flex;justify-content:space-between;align-items:baselin
 header nav{display:flex;gap:28px}
 header nav a{text-decoration:none;color:var(--grey)}
 header nav a:hover,header nav a[aria-current="page"]{color:var(--text)}
+header nav{align-items:baseline}
+.navdrop{position:relative}
+.navdrop > a{display:inline-flex;align-items:center;gap:5px}
+.navdrop .chev{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:rotate .25s ease}
+.dropmenu{position:absolute;left:-16px;top:100%;padding-top:12px;z-index:20;opacity:0;visibility:hidden;translate:0 -4px;transition:opacity .2s ease,translate .25s cubic-bezier(.2,.7,.2,1),visibility 0s linear .25s}
+.dropmenu::before{content:"";position:absolute;inset:12px 0 0;background:#fff;border:1px solid var(--hair);border-radius:16px;box-shadow:0 18px 40px -18px rgba(20,20,20,.28),0 2px 6px rgba(20,20,20,.05);z-index:-1}
+.dropmenu a{display:block;white-space:nowrap;padding:10px 18px;margin:0 6px;border-radius:10px;color:var(--text)}
+.dropmenu a:first-child{margin-top:6px}.dropmenu a:last-child{margin-bottom:6px}
+.dropmenu a:hover,.dropmenu a:focus-visible{background:color-mix(in srgb,var(--text) 6%,transparent)}
+.navdrop:hover .dropmenu,.navdrop:focus-within .dropmenu{opacity:1;visibility:visible;translate:0 0;transition:opacity .2s ease,translate .25s cubic-bezier(.2,.7,.2,1),visibility 0s}
+.navdrop:hover .chev,.navdrop:focus-within .chev{rotate:180deg}
+@media (prefers-reduced-motion: reduce){.dropmenu,.navdrop .chev{transition:none}}
 
 .intro{padding-block:clamp(48px,7vw,104px) clamp(56px,7vw,104px)}
 .intro h1{font-size:clamp(30px,4.2vw,54px);font-weight:500;line-height:1.1;letter-spacing:-.015em;max-width:18em;text-wrap:balance}
@@ -495,7 +507,13 @@ footer h2{font-size:22px;font-weight:500;line-height:1.25;max-width:14em}
   <div class="wrap">
     <a class="name" href="#work">Gianna Gioia</a>
     <nav aria-label="Main">
-      <a href="#work" data-nav="work">Work</a>
+      <div class="navdrop">
+        <a href="#work" data-nav="work" aria-haspopup="true">Work<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5l3-3"/></svg></a>
+        <div class="dropmenu" aria-label="Work sections">
+          <a href="#in-progress">In progress</a>
+          <a href="#past-projects">Past projects</a>
+        </div>
+      </div>
       <a href="#about" data-nav="about">About</a>
       <a href="#contact" data-nav="contact">Contact</a>
     </nav>
@@ -627,11 +645,19 @@ footer h2{font-size:22px;font-weight:500;line-height:1.25;max-width:14em}
   function route(){
     var h = (location.hash||'').slice(1);
     if(!h || h==='work'){ show('work'); return; }
+    if(h==='in-progress' || h==='past-projects'){
+      show('work');
+      var tb=document.getElementById(h==='in-progress'?'tab-now':'tab-past'); if(tb) tb.click();
+      var tl=document.querySelector('.tabs'); if(tl) window.scrollTo(0, Math.max(0, tl.getBoundingClientRect().top + window.scrollY - 48));
+      if(document.activeElement && document.activeElement.closest && document.activeElement.closest('.dropmenu')) document.activeElement.blur();
+      return;
+    }
     if(names.indexOf(h) > -1){ show(h); return; }
     if(document.getElementById(h)){ show(current || 'work', h); return; }
     show('work');
   }
   window.addEventListener('hashchange', route);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && document.activeElement && document.activeElement.closest && document.activeElement.closest('.navdrop')) document.activeElement.blur(); });
   document.addEventListener('click', function(e){ var a=e.target.closest('a[href^="#"]'); if(a && a.getAttribute('href')===location.hash){ e.preventDefault(); route(); } });
   route();
 })();
